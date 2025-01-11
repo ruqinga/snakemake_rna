@@ -22,8 +22,9 @@ for folder in subfolders:
         # 读取文件
         temp_data = pd.read_csv(file_path, sep='\t', header=0)
 
-        # 提取第5和第10列，并指定列名
+        # 通过列名提取列，并重命名
         temp_data = temp_data[['gene_short_name', 'FPKM']]
+        #temp_data = temp_data[['tracking_id', 'FPKM']]
         temp_data.columns = ['gene', folder_name]
 
         # 如果存在重复的基因条目，对其进行平均处理
