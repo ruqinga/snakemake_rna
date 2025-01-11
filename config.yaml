@@ -1,0 +1,42 @@
+fq_dir: ""
+work_dir: ""
+
+# Input Reads
+dt: "" # datatype = SE or PE
+Spe: "mm10" # Species: "human" or "mm10" or "mm9"
+
+reads:
+  - read1: " "  # Provide read1 file path
+    read2: " "  # Provide read2 file path if PE, else leave empty
+
+# Environment
+conda_env: "base-omics"
+conda_cufflink: "py36"
+
+# Pipeline Configuration Parameters
+trim:
+  params: "--quality 20 --max_n 4 --length 30 --phred33"
+
+hisat2:
+  params: "-t -q -p 20 --dta-cufflinks -x"
+  index:
+    human: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/hg38/hg38.p14"
+    mm10: "/public/slst/home/leixy2023/database/mm10/hisat2_index/mm10_hisat2_index"
+    mm9: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/mm9/mm9_hisat2_index"
+
+gtf:
+  human: "/public/slst/home/zhenghui/guoli/database/gene_annotation/ucsc/hg38.refGene.gtf"
+  mm10: "/public/slst/home/leixy2023/database/mm10/gencode.vM25.annotation_remove_miRNA_snoRNA_snRNA.gtf"
+  mm9: "/public/slst/home/zhenghui/guoli/database/gene_annotation/ucsc/mm9.refGene.gtf"
+
+threads: 10
+
+# Output Directories
+# 输出的目录格式，有些被硬编码到了流程中，不建议修改
+directories:
+  trim_out: "{work_dir}/02_cleandata/trim_galore"
+  qc_out: "{work_dir}/03_qc"
+  align_out: "{work_dir}/04_align"
+  count_out: "{work_dir}/05_counts"
+  norm_out: "{work_dir}/06_norm"
+
