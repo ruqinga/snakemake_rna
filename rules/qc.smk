@@ -10,7 +10,6 @@ rule fastqc_rawdata:
         "{qc_out}/rawdata/logs/fastqc_raw.log"
     shell:
         """
-        mkdir -p {params.qc_out}/logs
         fastqc {input.rawdata} -o {params.qc_out} > {log} 2>&1
         touch {output}
         """
@@ -27,7 +26,6 @@ rule fastqc_trim:
         "{qc_out}/trimmed/logs/fastqc_trim.log"
     shell:
         """
-        mkdir -p {params.qc_out}/logs
         fastqc {input.trimmed_fq} -o {params.qc_out} > {log} 2>&1
         touch {output}
         """

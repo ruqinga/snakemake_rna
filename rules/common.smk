@@ -55,6 +55,7 @@ def get_all(directories, samples):
         "{align_out}/{sample}.Hisat_aln.sorted.bam",
         "{align_out}/{sample}.Hisat_aln.sorted.bw",
         "{count_out}/{sample}.txt",
+        "{rep_out}/{sample}_rep.txt",
         "{norm_out}/{sample}/genes.fpkm_tracking"
     ]
 

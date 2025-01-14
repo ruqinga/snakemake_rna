@@ -9,7 +9,7 @@ rule norm_cufflinks:
     params:
         norm_out = directories['norm_out'],
         norm_out_sample = lambda wildcards: f"{directories['norm_out']}/{wildcards.sample}",
-        gtf = config["gtf"][config["Spe"]],
+        gtf = config["gtf"][config["Spe"]]["genome"],
         thread = config["threads"]
     log:
         log="{norm_out}/logs/{sample}.log"

@@ -20,8 +20,6 @@ rule trim:
         log = "{trim_out}/logs/{sample}.log"
     shell:
         """
-        # mkdir -p {params.trim_out}
-        # mkdir -p $(dirname {log.log})
         if [ "{config[dt]}" == "SE" ]; then
            trim_galore {params.option} {input.read} -o {params.trim_out} > {log.log} 2>&1
         else
