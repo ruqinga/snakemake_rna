@@ -55,8 +55,11 @@ def get_all(directories, samples):
         "{align_out}/{sample}.Hisat_aln.sorted.bam",
         "{align_out}/{sample}.Hisat_aln.sorted.bw",
         "{count_out}/{sample}.txt",
-        "{rep_out}/{sample}_rep.txt",
-        "{norm_out}/{sample}/genes.fpkm_tracking"
+        "{rep_out}/{sample}.rep.txt",
+        "{norm_out}/{sample}/genes.fpkm_tracking",
+        "{norm_out}/merged_fpkm.txt",
+        "{count_out}/merged_count.txt",
+        "{rep_out}/merged_count.rep.txt"
     ]
 
     # 根据模式展开所有目标文件路径

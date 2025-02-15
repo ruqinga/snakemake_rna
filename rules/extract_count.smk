@@ -7,7 +7,6 @@ rule count_feature_with_featurecount:
         config["conda_env"]
     group: "processing_group"
     params:
-        count_out = directories["count_out"],
         gtf = config["gtf"][config["Spe"]]["genome"],
         thread = config["threads"]
     log:
@@ -29,12 +28,11 @@ rule repeats_count_feature_with_featurecount:
     input:
         bam=get_alined_list
     output:
-        counts="{rep_out}/{sample}_rep.txt"
+        counts="{rep_out}/{sample}.rep.txt"
     conda:
         config["conda_env"]
     group: "processing_group"
     params:
-        rep_out = directories["rep_out"],
         gtf=config["gtf"][config["Spe"]]["repeats"],
         thread=config["threads"]
     log:

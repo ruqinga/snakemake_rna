@@ -18,4 +18,4 @@ include: "rules/trim.smk"
 include: "rules/hisat2.smk"
 include: "rules/extract_count.smk"
 include: "rules/norm.smk"
-
+include: "rules/tidy.smk"
