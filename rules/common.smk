@@ -49,27 +49,29 @@ def get_all(directories, samples):
     # 定义不同模式下的文件扩展名
     trim_ext = "_1_val_1.fq.gz" if is_pe else "_trimmed.fq.gz"
 
-    # 通用文件路径
-    targets = [
-        "{trim_out}/{sample}" + trim_ext,
-        "{align_out}/{sample}.Hisat_aln.sorted.bam",
-        "{align_out}/{sample}.Hisat_aln.sorted.bw",
-        "{count_out}/{sample}.txt",
-        "{rep_out}/{sample}.rep.txt",
-        "{norm_out}/{sample}/genes.fpkm_tracking",
-        "{norm_out}/merged_fpkm.txt",
-        "{count_out}/merged_count.txt",
-        "{rep_out}/merged_count.rep.txt"
-    ]
+    # # 通用文件路径
+    # targets = [
+    #     "{trim_out}/{sample}" + trim_ext,
+    #     "{align_out}/{sample}.Hisat_aln.sorted.bam",
+    #     "{align_out}/{sample}.Hisat_aln.sorted.bw",
+    #     "{count_out}/{sample}.txt",
+    #     "{rep_out}/{sample}_rep.txt",
+    #     "{norm_out}/{sample}/genes.fpkm_tracking",
+    #     "{norm_out}/merged_fpkm.txt",
+    #     "{count_out}/merged_count.txt"
+    #     #"{rep_out}/merged_count_rep.txt"
+    # ]
+    #
+    # # 根据模式展开所有目标文件路径
+    # all_targets = [
+    #     expand(path, **directories, sample=samples) for path in targets
+    # ]
+    #
+    # # 展平列表并打印调试信息
+    # flattened_targets = [item for sublist in all_targets for item in sublist]
+    # print(flattened_targets)  # 打印调试信息
 
-    # 根据模式展开所有目标文件路径
-    all_targets = [
-        expand(path, **directories, sample=samples) for path in targets
-    ]
-
-    # 展平列表并打印调试信息
-    flattened_targets = [item for sublist in all_targets for item in sublist]
-    print(flattened_targets)  # 打印调试信息
+    flattened_targets = "RNA_results/01_cleandata/{sample}_1_val_1.fq.gz"
 
     return flattened_targets
 

@@ -2,19 +2,18 @@ rule align_reads_with_hisat2:
     input:
         read = get_trimmed_list
     output:
-        sam = temp("{align_out}/{sample}.sam"),
-        sorted_bam = "{align_out}/{sample}.Hisat_aln.sorted.bam",
-        sorted_bam_bai = "{align_out}/{sample}.Hisat_aln.sorted.bam.bai",
-        sorted_bw = "{align_out}/{sample}.Hisat_aln.sorted.bw"
+        sam = temp("Results/03_align/{sample}.sam"),
+        sorted_bam = "Results/03_align/{sample}.Hisat_aln.sorted.bam",
+        sorted_bam_bai = "Results/03_align/{sample}.Hisat_aln.sorted.bam.bai",
+        sorted_bw = "Results/03_align/{sample}.Hisat_aln.sorted.bw"
     conda:
         config["conda_env"]
     group: "processing_group"
     params:
         option = config["hisat2"]["params"],
-        index= config["hisat2"]["index"][config["Spe"]],
-        align_out = directories["align_out"]
+        index= config["hisat2"]["index"][config["Spe"]]
     log:
-        log = "{align_out}/logs/{sample}.log"
+        log = "Results/03_align/logs/{sample}.log"
     shell:
         """
         if [ "{config[dt]}" == "SE" ]; then

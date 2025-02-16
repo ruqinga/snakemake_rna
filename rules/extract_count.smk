@@ -28,7 +28,7 @@ rule repeats_count_feature_with_featurecount:
     input:
         bam=get_alined_list
     output:
-        counts="{rep_out}/{sample}.rep.txt"
+        counts="{rep_out}/{sample}_rep.txt"
     conda:
         config["conda_env"]
     group: "processing_group"

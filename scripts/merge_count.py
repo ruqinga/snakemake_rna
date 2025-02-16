@@ -18,6 +18,8 @@ def merge_count_files():
         # 提取文件名作为样本ID
         sample_id = '.'.join(Path(fp).stem.split('.')[:-1]) #移除所有拓展名
 
+        print(f"Processing sample_id: {sample_id}")
+
         # 确定需要的列：基因ID列和表达量列（最后一列）
         required_columns = [merge_column, df.columns[-1]]
 

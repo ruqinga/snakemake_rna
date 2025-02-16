@@ -3,11 +3,10 @@
 # 合并fpkm
 rule cufflinks_merge:
     input:
-        files=expand("{norm_out}/{sample}/genes.fpkm_tracking",
-            norm_out=directories['norm_out'],
+        files=expand("Results/06_norm/{sample}/genes.fpkm_tracking",
             sample=samples)
     output:
-        merged_fpkm = "{norm_out}/merged_fpkm.txt"
+        merged_fpkm = "Results/06_norm/merged_fpkm.txt"
     conda:
         config["conda_env"]
     group: "processing_group"
@@ -20,14 +19,13 @@ rule cufflinks_merge:
 rule count_merge:
     input:
         files=expand("{count_out}/{sample}.txt",
-            count_out=directories['count_out'],
             sample=samples)
     output:
-        merged_count = "{count_out}/merged_count.txt"
+        merged_count = "Results/05_count/merged_count.txt"
     params:
         id_column="Geneid"
     log:
-        log="{count_out}/logs/merge_count.log"
+        log="Results/05_count/logs/merge_count.log"
     conda:
         config["conda_env"]
     group: "processing_group"
@@ -36,15 +34,14 @@ rule count_merge:
 
 rule rep_count_merge:
     input:
-        files=expand("{rep_out}/{sample}.txt",
-            rep_out=directories['rep_out'],
+        files=expand("Results/07_rep_count/{sample}_rep.txt",
             sample=samples)
     output:
-        merged_count = "{rep_out}/merged_count.rep.txt"
+        merged_count = "Results/07_rep_count/merged_count_rep.txt"
     params:
         id_column="Geneid"
     log:
-        log="{rep_out}/logs/merge_count_rep.log"
+        log="Results/07_rep_count/logs/merge_count_rep.log"
     conda:
         config["conda_env"]
     group: "processing_group"

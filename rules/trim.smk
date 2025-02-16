@@ -3,11 +3,11 @@ rule trim:
         read = get_fq_list
     output:
         trimmed_read = (
-            "{trim_out}/{sample}_trimmed.fq.gz"
+            "Results/01_cleandata/{sample}_trimmed.fq.gz"
             if config["dt"] == "SE"
             else [
-                "{trim_out}/{sample}_1_val_1.fq.gz",
-                "{trim_out}/{sample}_2_val_2.fq.gz"
+                "Results/01_cleandata/{sample}_1_val_1.fq.gz",
+                "Results/01_cleandata/{sample}_2_val_2.fq.gz"
             ]
         )
     conda:
@@ -15,9 +15,9 @@ rule trim:
     group: "processing_group"
     params:
         option = config["trim"]["params"],
-        trim_out = directories["trim_out"]
+        trim_out = "RNA_results/01_cleandata"
     log:
-        log = "{trim_out}/logs/{sample}.log"
+        log = "Results/01_cleandata/logs/{sample}.log"
     shell:
         """
         if [ "{config[dt]}" == "SE" ]; then
