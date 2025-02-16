@@ -21,7 +21,7 @@ json_array_pe=()
 json_array_se=()
 
 # 遍历所有 .fastq.gz 文件
-for file in $(find "$fq_dir" -name "*.fastq.gz" | sort); do
+for file in $(find "$fq_dir" -name "*.fastq.gz" -maxdepth 1 | sort); do
     # 检查是否是带 _1.fastq.gz 或 _2.fastq.gz 的 PE 文件
     if [[ "$file" =~ _1.fastq.gz$ ]]; then
         # 获取对应的 _2 文件
