@@ -1,0 +1,19 @@
+# ============== 全局默认配置 ==============
+__default__:
+  queue: "slst_pub"      # 默认队列 slst_pub slst_fat  pub_fast
+  nodes: 1               # 默认节点数
+  ppn: 20                # 默认每节点核心数
+  walltime: "30:00:00"   # 默认运行时间
+  mem: "100G"              # 默认内存
+
+# ============== 按规则自定义配置 ==============
+#bwa_mem:
+#  queue: "slst_high"     # 覆盖默认队列
+#  ppn: 8                 # 覆盖默认 ppn
+#  mem: "16G"             # 此规则需要更多内存
+#  walltime: "48:00:00"   # 长时间任务
+#
+#samtools_sort:
+#  ppn: 4
+#  mem: "32G"             # 内存密集型任务
+

@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="E:\software\miniconda" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="E:\software\miniconda" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="snakemake_env" project-jdk-type="Python SDK" />
 </project>

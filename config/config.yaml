@@ -1,0 +1,39 @@
+fq_dir: ""
+
+# Input Reads
+reads:
+  - read1: ""
+    read2: ""
+
+# Spe
+Spe: "mm10" # Species: "human" or "mm10" or "mm9"
+
+# Environment
+conda_env: "base-omics"
+conda_cufflink: "py36"
+
+# Pipeline Configuration Parameters
+threads: 10
+trim:
+  params: "--quality 20 --max_n 4 --length 30 --phred33"
+
+hisat2:
+  params: "-t -q -p 20 --dta-cufflinks -x"
+  index:
+    human: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/hg38/hg38.p14"
+    mm10: "/public/slst/home/leixy2023/database/mm10/hisat2_index/mm10_hisat2_index"
+    mm9: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/mm9/mm9_hisat2_index"
+
+bamCoverage:
+  params: "--binSize 100 --normalizeUsing RPKM --numberOfProcessors 20"
+
+gtf:
+  human: "/public/slst/home/zhenghui/guoli/database/gene_annotation/ucsc/hg38.refGene.gtf"
+  mm10:
+    genome: "/public/slst/home/leixy2023/database/mm10/gencode.vM25.annotation_remove_miRNA_snoRNA_snRNA.gtf"
+    repeats: "/home_data/home/slst/leixy2023/data/database/mm10/mm10_repeatmasker/mm10_rep.gtf"
+  mm9: "/public/slst/home/zhenghui/guoli/database/gene_annotation/ucsc/mm9.refGene.gtf"
+
+
+
+

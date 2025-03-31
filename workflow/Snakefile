@@ -1,0 +1,24 @@
+configfile: "config/config.yaml"
+include: "rules/common.smk"
+
+# 获取全局参数
+# print(f"Config: {config}")
+
+processor = SampleProcessor(config)
+sample_info = processor.sample_info
+samples = processor.sample_names
+
+print(sample_info)
+print(processor.get_all_targets())
+
+rule all:
+    input: processor.get_all_targets()
+
+
+#load rules
+include: "rules/trim.smk"
+include: "rules/qc.smk"
+include: "rules/hisat2.smk"
+include: "rules/extract_count.smk"
+include: "rules/norm.smk"
+include: "rules/tidy.smk"

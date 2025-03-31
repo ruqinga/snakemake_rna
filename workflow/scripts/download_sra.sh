@@ -18,7 +18,7 @@ srr_list_file="$1"
 output_dir="$(dirname "$srr_list_file")"
 
 # 确保切换到文件所在目录
-#cd "$output_dir" || { echo "无法进入目录: $output_dir"; exit 1; }
+cd "$output_dir" || { echo "无法进入目录: $output_dir"; exit 1; }
 
 # 提取 run_accession 列并保存为 sralist.txt
 awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="run_accession") col=i} NR>1 {print $col}' "$srr_list_file" > "$output_dir/sralist.txt"
