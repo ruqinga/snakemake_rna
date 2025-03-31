@@ -52,6 +52,8 @@ nohup bash run.sh <fq_dir> -y &
 
 使用 conda 或 [mamba](https://github.com/mamba-org/micromamba-releases/releases)（推荐） 安装 snakemake，使 Snakemake 能够处理工作流程的软件依赖 。
 
+​    
+
 1）创建一个新的conda环境并安装snakemake和snakedeploy
 
 ```
@@ -62,7 +64,7 @@ mamba create -n snakemake_env -c conda-forge -c bioconda snakemake snakedeploy
 
 这个命令指定了从 conda-forge 和 bioconda 安装 snakemake
 
-
+​    
 
 2）激活新创建的环境
 
@@ -90,7 +92,7 @@ pip install snakemake-executor-plugin-cluster-generic
 
 ## Step2: 下载workflow
 
-
+​    
 
 从GitHub下载workflow
 
@@ -104,7 +106,7 @@ git clone https://github.com/ruqinga/snakemake_rna
 
 ### 3.1 配置config.yaml
 
-
+​    
 
 修改conda环境为你的conda环境名称
 
@@ -114,7 +116,7 @@ conda_env: "base-omics"
 conda_cufflink: "py36"
 ```
 
- 
+​     
 
 修改index路径以及物种信息
 
@@ -122,11 +124,11 @@ conda_cufflink: "py36"
 Spe: "mm10" # Species: "human" or "mm10" or "mm9"
 ```
 
- 
+​     
 
 其它参数可视需求调整
 
-
+​    
 
 ### 配置cluster_config.yaml
 
