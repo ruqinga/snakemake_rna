@@ -2,25 +2,24 @@
 
 修改日期：2025.03.31
 
-pipline: fq.gz → trim → qc → hisat2 → featurecount + cufflink
-
 使用方法：
 
 ```sh
 bash run.sh <fq_dir> -y
+# `-y`:确定提交到pbs
 ```
-
-`-y`是指确定提交到pbs
 
 下面是测试数据的运行情况：
 
-![image-20250331170152131](./../../../../../OneDrive - shanghaitech.edu.cn/02 sort/01 obsidian/forge/picture/image-20250331170152131.png)
+![image-20250331170152131](https://raw.githubusercontent.com/ruqinga/picture/main/2024/image-20250331170152131.png)
 
 确定没问题则通过nohup提交
 
 ```
 nohup bash run.sh <fq_dir> -y &
 ```
+
+**pipline: fq.gz → trim → qc → hisat2 → featurecount + cufflink**
 
 目录结构：
 
