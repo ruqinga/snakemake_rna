@@ -40,7 +40,8 @@ class SampleProcessor:
             f"Results/07_repeats_count/{sample}_{dt}.txt",
             f"Results/05_count/merged_count.txt",
             f"Results/06_norm/merged_fpkm.txt",
-            f"Results/07_repeats_count/merged_count.rep.txt"
+            f"Results/07_repeats_count/merged_count.rep.txt",
+            f"Results/summary.csv"
         ]
 
     # 获取所有目标路径

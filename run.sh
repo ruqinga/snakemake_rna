@@ -4,8 +4,7 @@
 
 # 检查输入目录是否存在
 if [ -z "$1" ]; then
-    echo "错误：未指定输入目录！"
-    echo "用法: bash $0 <fq_dir> [-y]"
+    echo "错误: 未指定输入目录！"
     exit 1
 elif [ ! -d "$1" ]; then
     echo "错误：目录 $1 不存在！"
@@ -104,7 +103,7 @@ snakemake \
     --latency-wait 60 \
     --jobs 5 \
     --use-conda \
-    --groups processing_group=7 global_process=5 checkpoint_group=2 \
+    --groups processing_group=7 global_process=6 \
     --config fq_dir="$fq_dir" reads="$json_output"
 #--sample {wildcards.sample}
 
