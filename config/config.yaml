@@ -21,7 +21,7 @@ hisat2:
   params: "-t -q -p 20 --dta-cufflinks -x"
   index:
     human: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/hg38/hg38.p14"
-    mm10: "/public/slst/home/leixy2023/database/mm10/hisat2_index/mm10_hisat2_index"
+    mm10: "/public/slst/home/leixy2023/database/mm10/index_hisat2/mm10_hisat2_index"
     mm9: "/public/slst/home/zhenghui/guoli/database/index/hisat2_index/mm9/mm9_hisat2_index"
 
 bamCoverage:

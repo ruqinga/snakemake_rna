@@ -76,6 +76,7 @@ fi
 
 
 # 运行 Snakemake 工作流（预览模式）
+# snakemake --until extract_methylation_pe --touch # 可以更新文件状态，避免重复生成
 echo "运行 Snakemake （仅预览）..."
 snakemake \
     -np \
@@ -103,7 +104,6 @@ snakemake \
     --latency-wait 60 \
     --jobs 5 \
     --use-conda \
-    --groups processing_group=7 global_process=6 \
     --config fq_dir="$fq_dir" reads="$json_output"
 #--sample {wildcards.sample}
 
