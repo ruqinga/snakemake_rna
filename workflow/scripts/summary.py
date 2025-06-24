@@ -4,6 +4,11 @@ import pandas as pd
 from pathlib import Path
 
 # 配置
+trim_logs_dir = Path("Results/02_trim_out/logs/")  # 输入目录1
+align_logs_dir = Path("Results/04_align_out/logs/")  # 输入目录2
+outputfile = Path("Results/summary.csv")
+
+
 trim_logs_dir = Path(snakemake.params.trim_log_dir)  # 输入目录1
 align_logs_dir = Path(snakemake.params.align_log_dir)  # 输入目录2
 outputfile = Path(snakemake.output.summary)
@@ -96,10 +101,11 @@ def process_logs(trim_logs_dir, align_logs_dir):
     df["raw_reads"] = df["raw_reads"].astype(int)  # 保留 0 位小数
     df["clean_reads"] = df["clean_reads"].astype(int)  # 保留 0 位小数
     df["mapped_reads"] = df["mapped_reads"].astype(int)  # 保留 0 位小数
-    df["mapping_rate"] = df["mapping_rate"].round(2)  # 保留 2 位小数
+    df["mapping_rate"] = df["mapping_rate"].round(4)  # 保留 4 位小数
 
     # 结果排序和保存
     df.to_csv(outputfile, sep='\t', index=False, encoding='utf-8')
+    print(f"Saved summary to {outputfile}")
 
 
 if __name__ == "__main__":
