@@ -6,7 +6,6 @@ rule align_reads_with_hisat2_se:
         sorted_bam = "Results/04_align_out/{sample}_se.Hisat_aln.sorted.bam"
     conda:
         config["conda_env"]
-    group: "processing_group"
     params:
         option = config["hisat2"]["params"],
         index= config["hisat2"]["index"][config["Spe"]]
@@ -29,7 +28,6 @@ rule align_reads_with_hisat2_pe:
         sorted_bam="Results/04_align_out/{sample}_pe.Hisat_aln.sorted.bam"
     conda:
         config["conda_env"]
-    group: "processing_group"
     params:
         option=config["hisat2"]["params"],
         index=config["hisat2"]["index"][config["Spe"]]
@@ -45,26 +43,28 @@ rule align_reads_with_hisat2_pe:
         """
 
 rule bam2bw:
-    input: bam="Results/04_align_out/{sample}.Hisat_aln.sorted.bam"
-    output: bw = "Results/04_align_out/bw/{sample}.Hisat_aln.sorted.bw"
+    input:
+        bam="Results/04_align_out/{sample}_{dt}.Hisat_aln.sorted.bam",
+        bam_bai= "Results/04_align_out/{sample}_{dt}.Hisat_aln.sorted.bam.bai"
+    output: bw = "Results/08_bw/{sample}_{dt}.bw"
     conda: config["conda_env"]
     group: "processing_group"
     params:
         option=config["bamCoverage"]["params"]
     log:
-        log="Results/04_align_out/logs/bw_{sample}.log"
+        log="Results/08_bw/logs/bw_{sample}_{dt}.log"
     shell:
         """
         bamCoverage --bam "{input.bam}" --outFileName "{output.bw}" --outFileFormat bigwig {params.option} >> {log.log} 2>&1
         """
 
 rule bam_index:
-    input: bam = "Results/04_align_out/{sample}.Hisat_aln.sorted.bam"
-    output: bam_bai = "Results/04_align_out/{sample}.Hisat_aln.sorted.bam.bai"
+    input: bam = "Results/04_align_out/{sample}_{dt}.Hisat_aln.sorted.bam"
+    output: bam_bai = "Results/04_align_out/{sample}_{dt}.Hisat_aln.sorted.bam.bai"
     conda: config["conda_env"]
     group: "processing_group"
     log:
-        log="Results/04_align_out/logs/index_{sample}.log"
+        log="Results/04_align_out/logs/{sample}_{dt}.log"
     shell:
         """
         samtools index "{input.bam}" "{output.bam_bai}" >> {log.log} 2>&1

@@ -4,9 +4,9 @@ import pandas as pd
 from pathlib import Path
 
 # 配置
-trim_logs_dir = Path("Results/02_trim_out/logs/")  # 输入目录1
-align_logs_dir = Path("Results/04_align_out/logs/")  # 输入目录2
-outputfile = Path("Results/summary.csv")
+# trim_logs_dir = Path("Results/02_trim_out/logs/")  # 输入目录1
+# align_logs_dir = Path("Results/04_align_out/logs/")  # 输入目录2
+# outputfile = Path("Results/summary.csv")
 
 
 trim_logs_dir = Path(snakemake.params.trim_log_dir)  # 输入目录1
@@ -97,10 +97,12 @@ def process_logs(trim_logs_dir, align_logs_dir):
         "mapping_rate": mapping_rates
     }).reset_index().rename(columns={"index": "filename"})  # filename 是列，而不是索引
 
+    #print(f"{df.head()}")
+
     # 格式化数值列
-    df["raw_reads"] = df["raw_reads"].astype(int)  # 保留 0 位小数
-    df["clean_reads"] = df["clean_reads"].astype(int)  # 保留 0 位小数
-    df["mapped_reads"] = df["mapped_reads"].astype(int)  # 保留 0 位小数
+    df["raw_reads"] = df["raw_reads"].astype("Int64")
+    df["clean_reads"] = df["clean_reads"].astype("Int64")
+    df["mapped_reads"] = df["mapped_reads"].astype("Int64")
     df["mapping_rate"] = df["mapping_rate"].round(4)  # 保留 4 位小数
 
     # 结果排序和保存

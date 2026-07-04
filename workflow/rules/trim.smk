@@ -13,7 +13,7 @@ rule trim_pe:
         option = config["trim"]["params"],
         trim_out= "Results/02_trim_out"
     log:
-        log = "Results/02_trim_out/logs/{sample}.log"
+        log = "Results/02_trim_out/logs/{sample}_pe.log"
     shell:
         """
            trim_galore {params.option} --paired {input.read[0]} {input.read[1]} -o {params.trim_out} > {log.log} 2>&1
@@ -31,7 +31,7 @@ rule trim_se:
         option = config["trim"]["params"],
         trim_out = "Results/02_trim_out"
     log:
-        log = "Results/02_trim_out/logs/{sample}.log"
+        log = "Results/02_trim_out/logs/{sample}_se.log"
     shell:
         """
            trim_galore {params.option} {input.read} -o {params.trim_out} > {log.log} 2>&1

@@ -41,6 +41,7 @@ class SampleProcessor:
             f"Results/05_count/merged_count.txt",
             f"Results/06_norm/merged_fpkm.txt",
             f"Results/07_repeats_count/merged_count.rep.txt",
+            f"Results/08_bw/{sample}_{dt}.bw",
             f"Results/summary.csv"
         ]
 

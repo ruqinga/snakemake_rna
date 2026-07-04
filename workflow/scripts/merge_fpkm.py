@@ -1,51 +1,51 @@
 import pandas as pd
 from pathlib import Path
 
-# config
-input_files = snakemake.input # 输入文件
-output_path = Path(snakemake.output.merged_fpkm)  # 输出文件路径
+# config: when called by Snakemake
+if 'snakemake' in globals():
+    input_files = snakemake.input  # Input files from Snakemake
+    output_path = Path(snakemake.output.merged_fpkm)  # Output path from Snakemake
+else:
+    # Direct Python execution: setting the paths manually
+    input_files = list(Path('./Results/06_norm').rglob('genes.fpkm_tracking'))
+    output_path = Path('./Results/06_norm/merged_fpkm.txt')
 
 def merge_fpkm_files():
-
     merged_df = None
 
     for fp in sorted(input_files):
-        # 安全读取文件，跳过注释行
+        # Safely read the file, skipping comment lines
         df = pd.read_csv(fp, sep='\t', comment='#')
 
-        # 提取文件名作为样本ID
-        sample_id = Path(fp).parent.name  # 获取文件所在的文件夹名称
-        sample_id = sample_id.replace('_pe', '').replace('_se', '')  # 移除_pe/_se后缀
+        # Extract the sample ID from the folder name
+        sample_id = Path(fp).parent.name  # Get the parent folder name
+        sample_id = sample_id.replace('_pe', '').replace('_se', '')  # Remove _pe/_se suffixes
 
-        # 确定需要的列：基因ID列和表达量列（最后一列）
+        # Ensure the necessary columns exist
         required_columns = ['gene_short_name', 'FPKM']
-
-        # 检查文件是否包含必要的列
         if not all(col in df.columns for col in required_columns):
-            raise ValueError(f"文件 {fp} 缺少必要列: {required_columns}")
+            raise ValueError(f"File {fp} is missing required columns: {required_columns}")
 
-        # 提取所需列并重命名表达量列为样本ID
+        # Extract necessary columns and rename the expression column
         df = df[required_columns].copy()
         df.columns = ['gene', sample_id]
 
-        # 如果存在重复的基因条目，对其进行平均处理
+        # Average gene entries if duplicates exist
         df = df.groupby('gene').mean().reset_index()
 
-        # 合并数据框
+        # Merge data
         if merged_df is None:
-            # 如果是第一次循环，直接初始化合并结果
             merged_df = df
         else:
-            # 否则，基于基因ID列进行外连接合并
             merged_df = pd.merge(
                 merged_df,
                 df,
                 on='gene',
                 how='outer',
-                validate='one_to_one'  # 确保基因ID在每个文件中唯一
+                validate='one_to_one'
             )
 
-    # 结果排序和保存
+    # Sort and save the final result
     merged_df.sort_values('gene').to_csv(
         output_path,
         sep='\t',
@@ -54,6 +54,6 @@ def merge_fpkm_files():
     )
 
 if __name__ == '__main__':
-    # 创建输出目录（如果不存在）
+    # Create the output directory if it doesn't exist
     output_path.parent.mkdir(parents=True, exist_ok=True)
     merge_fpkm_files()

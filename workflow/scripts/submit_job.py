@@ -14,6 +14,7 @@ import subprocess
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", help="cluster_config.yaml 路径")
+    parser.add_argument("--seqtype", default="rna", help="cluster_config.yaml 路径")
     parser.add_argument("--sample", nargs='?', default="None", help="样本名称")
     parser.add_argument("--rule", help="规则名称")
     parser.add_argument("command", nargs=argparse.REMAINDER, help="snakemake command")
@@ -34,21 +35,22 @@ def load_config(config_file):
 def extract_sample_value(input_string):
     if input_string is None:
         return None
-    match = re.search(r'sample=(\w+)', input_string)
+    match = re.search(r'sample=([\w-]+)', input_string)
     if match:
         return match.group(1)
     else:
         return None
 
-def generate_qsub_command(config, sample, rule, command):
+def generate_qsub_command(config,seqtype, sample, rule, command):
     job_id = generate_job_id()
 
     # 读取 config 中的参数
-    queue = config.get('queue', 'slst_fat')
-    nodes = config.get('nodes', 1)
-    ppn = config.get('ppn', 4)
-    walltime = config.get('walltime', '25:00:00')
-    mem = config.get('mem', '8G')
+    default_config = config.get('__default__', {})
+    queue = default_config.get('queue', 'slst_fat')
+    nodes = default_config.get('nodes', 1)
+    ppn = default_config.get('ppn', 4)
+    walltime = default_config.get('walltime', '25:00:00')
+    mem = default_config.get('mem', '8G')
 
     # 定义输出文件路径，使用当前日期
     current_date = datetime.now().strftime("%Y%m%d")  # 获取当前日期，格式化为 YYYYMMDD
@@ -58,12 +60,12 @@ def generate_qsub_command(config, sample, rule, command):
     sample = extract_sample_value(sample)
     # 文件名基于 sample 和 rule
     if sample == None:
-        name = f"rna_{rule}"
+        name = f"{seqtype}_{rule}"
     else:
-        name = f"rna_{sample}"
+        name = f"{seqtype}_{sample}"
 
     current_dir = os.getcwd()
-    output_dir = os.path.join(current_dir, f"pbs/log/{current_date}/{name}_out.log")   # 输出文件路径
+    output_dir = os.path.join(current_dir, f"log_pbs/{current_date}/{name}_out.log")   # 输出文件路径
     os.makedirs(os.path.dirname(output_dir), exist_ok=True)
 
     # 将 command 列表转换为字符串
@@ -84,13 +86,13 @@ def generate_qsub_command(config, sample, rule, command):
 def main():
     # 解析命令行参数
     args = parse_args()
-    print(f"Config: {args.config}, Sample: {args.sample}, Rule: {args.rule}, command: {args.command}")
+    print(f"Config: {args.config}, SeqType:{args.seqtype}, Sample: {args.sample}, Rule: {args.rule}, command: {args.command}")
 
     # 从 config 文件加载配置
     config = load_config(args.config)
 
     # 生成 qsub 命令
-    qsub_command = generate_qsub_command(config, args.sample, args.rule, args.command)
+    qsub_command = generate_qsub_command(config,args.seqtype,args.sample, args.rule, args.command)
 
     # 打印 qsub 命令
     print(f"Generated qsub command: {qsub_command}")
