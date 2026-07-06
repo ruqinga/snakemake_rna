@@ -5,7 +5,7 @@ rule featurecount_se:
         counts = "Results/05_count/{sample}_se.txt"
     conda:
         config["conda_env"]
-    group: "processing_group"
+    group: "extract_tidy"
     params:
         gtf = config["gtf"][config["Spe"]]["genome"],
         thread = config["threads"]
@@ -26,7 +26,7 @@ rule featurecount_pe:
         counts="Results/05_count/{sample}_pe.txt"
     conda:
         config["conda_env"]
-    group: "processing_group"
+    group: "extract_tidy"
     params:
         gtf=config["gtf"][config["Spe"]]["genome"],
         thread=config["threads"]
@@ -47,7 +47,7 @@ rule repeats_featurecount_se:
         counts="Results/07_repeats_count/{sample}_se.txt"
     conda:
         config["conda_env"]
-    group: "processing_group"
+    group: "extract_tidy"
     params:
         gtf=config["gtf"][config["Spe"]]["repeats"],
         thread=config["threads"]
@@ -68,7 +68,7 @@ rule repeats_featurecount_pe:
         counts="Results/07_repeats_count/{sample}_pe.txt"
     conda:
         config["conda_env"]
-    group: "processing_group"
+    group: "extract_tidy"
     params:
         gtf=config["gtf"][config["Spe"]]["repeats"],
         thread=config["threads"]

@@ -92,13 +92,13 @@ def main():
         smk = snakemake
         input_dir = smk.params.input_dir if hasattr(smk.params, 'input_dir') else None
         suffix = smk.params.suffix if hasattr(smk.params, 'suffix') else None
+        id_column = smk.params.id_column if hasattr(smk.params, 'id_column') else None
         output_path = Path(smk.output[0]) if isinstance(smk.output, list) else Path(smk.output.merged_count)
-        merge_column = smk.params.id_column
         log_path = smk.log[0] if hasattr(smk, 'log') and isinstance(smk.log, list) and len(smk.log) > 0 else None
         setup_logging(log_path)
         input_files = get_files_from_dir(input_dir, suffix)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        merge_count_files(input_files, output_path, merge_column)
+        merge_count_files(input_files, output_path, id_column,suffix)
     else:
         args = parse_args()
         setup_logging(args.log)

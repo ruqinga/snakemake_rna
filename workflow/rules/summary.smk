@@ -9,6 +9,20 @@ rule summary:
         align_log_dir="Results/04_align_out/logs/"
     conda:
         config["conda_env"]
-    group: "global_process"
+    group: "summary"
     script:
         "../scripts/summary.py"
+#
+# rule read_distribution:
+#     input:
+#         all_rule_finish = "Results/06_norm/merged_fpkm.txt"
+#     output:
+#         summary = "Results/summary.csv"
+#     params:
+#         trim_log_dir="Results/02_trim_out/logs/",
+#         align_log_dir="Results/04_align_out/logs/"
+#     conda:
+#         config["conda_env"]
+#     group: "summary"
+#     script:
+#         "../scripts/read_distribution.py"

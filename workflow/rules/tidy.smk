@@ -11,7 +11,7 @@ rule cufflinks_merge:
         merged_fpkm = "Results/06_norm/merged_fpkm.txt"
     conda:
         config["conda_env"]
-    group: "global_process"
+    group: "extract_tidy"
     log:
         log="Results/06_norm/logs/merge_fpkm.log"
     script:
@@ -27,14 +27,16 @@ rule count_merge:
     output:
         merged_count = "Results/05_count/merged_count.txt"
     params:
+        input_dir="Results/05_count",
+        suffix=".txt",
         id_column="Geneid"
     log:
         log="Results/05_count/logs/merge_count.log"
     conda:
         config["conda_env"]
-    group: "global_process"
+    group: "extract_tidy"
     script:
-        "../scripts/merge_count.py"
+        "../scripts/merge_count_2.py"
 
 rule rep_count_merge:
     input:
@@ -45,11 +47,13 @@ rule rep_count_merge:
     output:
         merged_count = "Results/07_repeats_count/merged_count.rep.txt"
     params:
+        input_dir="Results/05_count",
+        suffix=".txt",
         id_column="Geneid"
     log:
         log="Results/07_repeats_count/logs/merge_count_rep.log"
     conda:
         config["conda_env"]
-    group: "global_process"
+    group: "extract_tidy"
     script:
-        "../scripts/merge_count.py"
+        "../scripts/merge_count_2.py"

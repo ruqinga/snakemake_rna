@@ -5,7 +5,7 @@ rule norm_cufflinks:
         fpkm = "Results/06_norm/{sample}_{dt}/genes.fpkm_tracking"
     conda:
         config["conda_cufflink"]
-    group: "processing_group"
+    group: "extract_tidy"
     params:
         norm_out = "Results/06_norm/{sample}_{dt}",
         gtf = config["gtf"][config["Spe"]]["genome"],

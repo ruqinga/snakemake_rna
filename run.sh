@@ -104,6 +104,7 @@ snakemake \
     --latency-wait 60 \
     --jobs 5 \
     --use-conda \
+    --groups extract_tidy=30 qc=30 \
     --config fq_dir="$fq_dir" reads="$json_output"
 #--sample {wildcards.sample}
 

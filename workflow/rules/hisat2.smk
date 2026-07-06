@@ -10,7 +10,7 @@ rule align_reads_with_hisat2_se:
         option = config["hisat2"]["params"],
         index= config["hisat2"]["index"][config["Spe"]]
     log:
-        log = "Results/04_align_out/logs/{sample}.log"
+        log = "Results/04_align_out/logs/{sample}_se.log"
     shell:
         """
         hisat2 {params.option} "{params.index}" -U "{input.read}" -S "{output.sam}" > {log.log} 2>&1
@@ -32,7 +32,7 @@ rule align_reads_with_hisat2_pe:
         option=config["hisat2"]["params"],
         index=config["hisat2"]["index"][config["Spe"]]
     log:
-        log="Results/04_align_out/logs/{sample}.log"
+        log="Results/04_align_out/logs/{sample}_pe.log"
     shell:
         """
         hisat2 {params.option} "{params.index}" -1 {input.read[0]} -2 {input.read[1]} -S "{output.sam}" > {log.log} 2>&1
@@ -64,8 +64,8 @@ rule bam_index:
     conda: config["conda_env"]
     group: "processing_group"
     log:
-        log="Results/04_align_out/logs/{sample}_{dt}.log"
+        log="Results/04_align_out/logs/index/{sample}_{dt}.log"
     shell:
         """
-        samtools index "{input.bam}" "{output.bam_bai}" >> {log.log} 2>&1
+        samtools index "{input.bam}" "{output.bam_bai}" > {log.log} 2>&1
         """
