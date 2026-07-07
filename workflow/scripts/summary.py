@@ -76,9 +76,10 @@ def process_logs(trim_logs_dir, align_logs_dir):
     for log_file in align_logs_dir.glob("*.log"):
         if log_file.stat().st_size > 0:  # 检查文件大小是否不为 0
             file_name_without_log = log_file.stem
-            clean_reads,aligned_reads = extract_clean_aligned_reads(log_file)
+            clean, aligned_reads = extract_clean_aligned_reads(log_file)
             mapped_reads[file_name_without_log] = aligned_reads
-            mapping_rates[file_name_without_log] = aligned_reads / clean_reads if clean_reads > 0 else 0 # 防止除零错误
+            clean_reads[file_name_without_log] = clean
+            mapping_rates[file_name_without_log] = aligned_reads / clean if clean > 0 else 0 # 防止除零错误
 
     # 合并数据到 DataFrame
     df = pd.DataFrame({
